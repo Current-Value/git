@@ -1,30 +1,36 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
-import {Input} from "../common/FormsControls/FormsControls";
+import {createField, Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validator";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import style from "./../common/FormsControls/FormsControls.module.css"
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={"Email"} name={"email"}
+        <form onSubmit={handleSubmit}>
+
+
+                {createField("Email","email",[required], Input)}
+
+             {/*   <Field placeholder={"Email"} name={"email"}---"тоже самое что и сторока выше"
                        validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
-                <Field placeholder={"Password"} name={"password"} type={"password"}
+                       component={Input}/>*/}
+
+                {createField("Password","password",[required], Input, {type: "password"})}
+
+                {/* <Field placeholder={"Password"} name={"password"} type={"password"}---"тоже самое что и сторока выше"
                        validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
-                <Field component={Input} name={"remember me"} type={"checkbox"}/> remember me
-            </div>
-            { props.error && <div className={style.formSummaryError}>
-                { props.error }
+                       component={Input}/>*/}
+
+
+                {createField(null,"remember me",null, Input, {type: "checkbox"}, "remember me")}
+
+                {/*<Field component={Input} name={"remember me"} type={"checkbox"}/> remember me---"тоже самое что и сторока выше"*/}
+
+            { error && <div className={style.formSummaryError}>
+                { error }
             </div>
             }
             <div>
